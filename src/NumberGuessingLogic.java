@@ -8,8 +8,7 @@ public class NumberGuessingLogic {
     public NumberGuessingLogic(){
         scan = new Scanner(System.in);
         guessedNum = 0;
-        game = null;
-        data = new NumberGuessing();
+        game = "";
         System.out.println("Welcome to the Number Guessing Game");
     }
 
@@ -19,20 +18,24 @@ public class NumberGuessingLogic {
     }
 
     private void gameStart(){
-        System.out.print("Please select a mode (Easy, Medium, or Hard): ");
+        System.out.print("Please select a mode (Easy, Medium, Hard, or Impossible): ");
         game = scan.nextLine();
-        data.setMode(game);
-        data.gameMode();
+        data = new NumberGuessing(game);
+        gameMode(game);
+        newGuess();
+        while (!data.getGameOver()){
+            newGuess();
+        }
+    }
+    private void newGuess(){
         System.out.print("Please pick a number between the range: ");
         guessedNum = scan.nextInt();
         scan.nextLine();
         data.game(guessedNum);
-        while (!data.getGameOver()){
-            System.out.print("Please pick a number between the range: ");
-            guessedNum = scan.nextInt();
-            scan.nextLine();
-            data.game(guessedNum);
-        }
+    }
+    private void gameMode(String game){
+        data.setMode(game);
+        data.game();
     }
 }
 
